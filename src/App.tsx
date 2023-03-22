@@ -1,5 +1,5 @@
 import nodeLogo from "./assets/node.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.scss";
 
 console.log(
@@ -9,6 +9,27 @@ console.log(
 
 function App() {
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const appPlatform = import.meta.env.VITE_APP_PLATFORM;
+
+    if (appPlatform === "desktop") {
+      import("electron").then((electron) => {
+        electron.ipcRenderer.on("main-process-message", (_event, ...args) => {
+          console.log("[Receive Main-process message]:", ...args);
+        });
+      });
+    }
+
+    return () => {
+      if (appPlatform === "desktop") {
+        import("electron").then((electron) => {
+          electron.ipcRenderer.off("main-process-message", () => {});
+        });
+      }
+    };
+  }, []);
+
   return (
     <div className="App">
       <div>
