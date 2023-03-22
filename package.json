@@ -13,9 +13,9 @@
   "scripts": {
     "dev:web": "cross-env VITE_APP_PLATFORM=web vite",
     "dev:desktop": "cross-env VITE_APP_PLATFORM=desktop vite",
-    "build:web": "cross-env VITE_APP_PLATFORM=web tsc && vite build",
-    "build:desktop": "cross-env VITE_APP_PLATFORM=desktop tsc && vite build && electron-builder",
-    "release:desktop": "cross-env VITE_APP_PLATFORM=desktop tsc && vite build && electron-builder --publish=always",
+    "build:web": "tsc && vite build",
+    "build:desktop": "tsc && vite build && electron-builder",
+    "release:desktop": "tsc && vite build && electron-builder --publish=always",
     "ts": "tsc --noEmit --watch",
     "lint": "eslint --ext .ts,.tsx ./src"
   },

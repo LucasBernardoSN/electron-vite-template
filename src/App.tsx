@@ -3,16 +3,21 @@ import { useEffect, useState } from "react";
 function App() {
   const [count, setCount] = useState(0);
   const appPlatform = import.meta.env.VITE_APP_PLATFORM;
+  const appPlatform2 = process.env.VITE_APP_PLATFORM;
 
   useEffect(() => {
     console.log("🔰 => appPlatform:", appPlatform);
+    console.log("🔰 => appPlatform2:", appPlatform2);
 
     if (appPlatform === "desktop") {
-      import("electron")
-        .then((electron) => {
-          electron.ipcRenderer.on("main-process-message", (_event, ...args) => {
-            console.log("[Receive Main-process message]:", ...args);
-          });
+      import("@/functions/processComunication")
+        .then(({ receiveMessageFromMainProcess }) => {
+          receiveMessageFromMainProcess(
+            "main-process-message",
+            (_event, ...args) => {
+              console.log("[Receive Main-process message]:", ...args);
+            }
+          );
         })
         .catch(() => {
           console.error(
@@ -23,9 +28,9 @@ function App() {
 
     return () => {
       if (appPlatform === "desktop") {
-        import("electron")
-          .then((electron) => {
-            electron.ipcRenderer.off("main-process-message", () => {});
+        import("@/functions/processComunication")
+          .then(({ receiveMessageFromMainProcess }) => {
+            receiveMessageFromMainProcess("main-process-message", () => {});
           })
           .catch(() => {
             console.error(

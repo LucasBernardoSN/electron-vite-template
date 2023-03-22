@@ -7,7 +7,9 @@ export function update(win: Electron.BrowserWindow) {
       autoUpdater.checkForUpdates();
 
       autoUpdater.on("update-downloaded", (event) => {
-        autoUpdater.quitAndInstall();
+        setTimeout(() => {
+          autoUpdater.quitAndInstall(false, true);
+        }, 5000);
       });
     }
   }
