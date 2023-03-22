@@ -2,24 +2,19 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-  "appId": "YourAppID",
-  "asar": true,
-  "directories": {
-    "output": "release/${version}"
+  appId: "YourAppID",
+  asar: true,
+  directories: {
+    output: "release/${version}",
   },
-  "files": [
-    "dist-electron",
-    "dist"
-  ],
-  "win": {
-    "target": [
+  files: ["dist-electron", "dist"],
+  win: {
+    target: [
       {
-        "target": "nsis",
-        "arch": [
-          "x64"
-        ]
-      }
+        target: "nsis",
+        arch: ["x64"],
+      },
     ],
-    "artifactName": '${productName}-Windows-${version}-Setup.${ext}',
+    artifactName: "${productName}-Windows-${version}-Setup.${ext}",
   },
 }
