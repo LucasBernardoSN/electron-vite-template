@@ -48,7 +48,7 @@ function App() {
         </p>
       </div>
       <div>
-        Place static files into the<code>/public</code> folder
+        Place static files into the<code>/public</code> folder.
       </div>
       <p>Platform: {appPlatform ?? "Error: No platform detected"}</p>
     </div>
