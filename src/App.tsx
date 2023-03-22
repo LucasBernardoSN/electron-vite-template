@@ -2,23 +2,36 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
+  const appPlatform = import.meta.env.VITE_APP_PLATFORM;
 
   useEffect(() => {
-    const appPlatform = import.meta.env.VITE_APP_PLATFORM;
+    console.log("🔰 => appPlatform:", appPlatform);
 
     if (appPlatform === "desktop") {
-      import("electron").then((electron) => {
-        electron.ipcRenderer.on("main-process-message", (_event, ...args) => {
-          console.log("[Receive Main-process message]:", ...args);
+      import("electron")
+        .then((electron) => {
+          electron.ipcRenderer.on("main-process-message", (_event, ...args) => {
+            console.log("[Receive Main-process message]:", ...args);
+          });
+        })
+        .catch(() => {
+          console.error(
+            "Error on import electron, probably not running on electron"
+          );
         });
-      });
     }
 
     return () => {
       if (appPlatform === "desktop") {
-        import("electron").then((electron) => {
-          electron.ipcRenderer.off("main-process-message", () => {});
-        });
+        import("electron")
+          .then((electron) => {
+            electron.ipcRenderer.off("main-process-message", () => {});
+          })
+          .catch(() => {
+            console.error(
+              "Error on import electron, probably not running on electron"
+            );
+          });
       }
     };
   }, []);
@@ -37,6 +50,7 @@ function App() {
       <div>
         Place static files into the<code>/public</code> folder
       </div>
+      <p>Platform: {appPlatform ?? "Error: No platform detected"}</p>
     </div>
   );
 }
