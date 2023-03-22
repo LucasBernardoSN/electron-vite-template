@@ -1,6 +1,6 @@
 {
   "name": "electron-vite-react",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "main": "dist-electron/main/index.js",
   "description": "Electron Vite React boilerplate.",
   "author": "LucasBernardoSN",
